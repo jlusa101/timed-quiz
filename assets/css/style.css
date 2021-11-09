@@ -50,3 +50,7 @@ body {
     font-size: 16px;
     border-radius: 5px;
 }
+
+.center button:hover {
+    background-color: #BA55D3;
+}
