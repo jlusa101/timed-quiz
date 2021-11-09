@@ -1,4 +1,4 @@
-var timeLeft = 60;
+var timeLeft = 75;
 
 
 var timer = function() {
