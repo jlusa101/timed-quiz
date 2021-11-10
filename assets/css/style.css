@@ -41,7 +41,7 @@ body {
     max-width: 638px;
 }
 
-.center button {
+.center .start-quiz {
     background-color: #4B0082;
     color: white;
     margin-top: 15px;
@@ -51,6 +51,11 @@ body {
     border-radius: 5px;
 }
 
-.center button:hover {
+.center .start-quiz:hover {
     background-color: #BA55D3;
+}
+
+.answerBubble {
+    background-color: #4B0082;
+    color: white;
 }
