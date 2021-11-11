@@ -50,6 +50,18 @@ form h1 {
     text-align: left;
 }
 
+form hr {
+    color: #d3d3d3;
+    margin-top: 25px;
+    width: 600px;
+}
+
+form h2 {
+    color: #d3d3d3;
+    align-self: flex-start;
+    padding-top: 10px;
+}
+
 .center .start-quiz {
     background-color: #4B0082;
     color: white;
