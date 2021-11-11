@@ -41,6 +41,15 @@ body {
     max-width: 638px;
 }
 
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form h1 {
+    text-align: left;
+}
+
 .center .start-quiz {
     background-color: #4B0082;
     color: white;
@@ -55,7 +64,19 @@ body {
     background-color: #BA55D3;
 }
 
-.answerBubble {
+.center #btn {
     background-color: #4B0082;
     color: white;
+    text-align: left;
+    margin-top: 5px;
+    font-size: 16px;
+    height: 35px;
+    width: 170px;
+    padding: 5px;
+    border-radius: 5px;
+    align-self: flex-start;
+}
+
+#btn:hover {
+    background-color: #BA55D3;
 }
