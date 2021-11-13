@@ -41,6 +41,36 @@ body {
     max-width: 638px;
 }
 
+.game-over {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+.game-over p {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.game-over input {
+    margin-left: 5px;
+    height: 25px;
+    width: 250px;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.game-over #submit-btn {
+    background-color: #4B0082;
+    color: white;
+    height: 25px;
+    width: 75px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 0 0 -10px 10px;
+}
+
 form {
     max-width: 600px;
     margin: 0 auto;

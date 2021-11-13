@@ -9,6 +9,8 @@ var timer = null;
 var index = 0;
 var userAnswer = "";
 
+var highScores = [];
+
 
 // Array of objects that contain questions, answers, and correct answer
 let quizQuestions = [{
@@ -43,17 +45,12 @@ let quizQuestions = [{
     },
     {
         "question": "Which of the following is not a valid JavaScript variable name?",
-        "possibleAnswers": ["Num", "userStatus", "Break", "myString"],
+        "possibleAnswers": ["num", "userStatus", "Break", "myString"],
         "correctAnswer": "Break"
     },
     {
-        "question": "Which method returns the character at the specified index?",
-        "possibleAnswers": ["characterAt()", "getCharAt()", "charAt()", "None of the above"],
-        "correctAnswer": "charAt()"
-    },
-    {
-        "question": "What are the types of Pop up boxes available in JavaScript? ",
-        "possibleAnswers": ["Alert", "Prompt", "Confirm", "All of the above"],
+        "question": "What are the types of pop up boxes available in JavaScript? ",
+        "possibleAnswers": ["Alert", "Prompt", "Confirm", "All of the Above"],
         "correctAnswer": "All of the above"
     }
 ]
@@ -65,6 +62,7 @@ var timerHandler = function() {
     if (timeLeft === 0) {
         // Stopping the timer
         clearInterval(timer);
+        gameOver();
         return;
     }
 };
@@ -115,6 +113,9 @@ var questionHandler = function(index, userAnswer) {
             } else {
                 // Penalizing user when answering a question wrong
                 timeLeft -= penalty;
+                if (timeLeft < 0) {
+                    timeLeft = 0;
+                }
                 userAnswer = wrongAnswer;
                 // Updating the time displayed in browser
                 document.getElementById("countdown").innerHTML = timeLeft;
@@ -125,6 +126,7 @@ var questionHandler = function(index, userAnswer) {
             if (quizQuestions[index] == null) {
                 // Stopping the timer
                 clearInterval(timer);
+                gameOver();
                 return;
             }
 
@@ -135,6 +137,51 @@ var questionHandler = function(index, userAnswer) {
 
 };
 
+var saveScores = function() {
+
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+};
+
+
+var gameOver = function() {
+
+    var finalForm = document.createElement("form");
+    finalForm.className = "game-over";
+    document.body.appendChild(finalForm);
+    var finalMessage = document.createElement("h1");
+    finalMessage.textContent = "All Done!"
+    finalForm.appendChild(finalMessage);
+
+    var userScore = document.createElement("p");
+    userScore.textContent = "Your final score is " + timeLeft + ".";
+    finalForm.appendChild(userScore);
+
+    var enterInitials = document.createElement("p");
+    enterInitials.textContent = "Enter initials:";
+    finalForm.appendChild(enterInitials);
+
+    var userInput = document.createElement("input");
+    userInput.setAttribute("id", "user-initials");
+    enterInitials.appendChild(userInput);
+
+    var submitScore = document.createElement("button");
+    submitScore.setAttribute("id", "submit-btn");
+    submitScore.textContent = "Submit";
+    enterInitials.appendChild(submitScore);
+
+    var highScoreObj = {
+        initials: "Tempoi",
+        score: timeLeft
+    };
+
+    highScores.push(highScoreObj);
+
+    submitScore.addEventListener("click", function(event) {
+        event.preventDefault();
+        saveScores();
+    });
+
+};
 
 // Event listener on the button that starts the quiz. Once clicked,
 // the first question is shown to user and the timer starts counting down
