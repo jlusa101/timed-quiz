@@ -56,7 +56,7 @@ let quizQuestions = [{
     {
         "question": "What are the types of pop up boxes available in JavaScript? ",
         "possibleAnswers": ["Alert", "Prompt", "Confirm", "All of the Above"],
-        "correctAnswer": "All of the above"
+        "correctAnswer": "All of the Above"
     }
 ]
 
