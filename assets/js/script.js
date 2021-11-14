@@ -8,8 +8,14 @@ var startQuiz = document.querySelector(".start-quiz");
 var timer = null;
 var index = 0;
 var userAnswer = "";
-
+var highScoreId = 0;
 var highScores = [];
+var highScoreObj = {
+    initials: "",
+    score: "",
+    id: ""
+}
+var userInput = "";
 
 
 // Array of objects that contain questions, answers, and correct answer
@@ -62,6 +68,7 @@ var timerHandler = function() {
     if (timeLeft === 0) {
         // Stopping the timer
         clearInterval(timer);
+        document.querySelector("form").remove();
         gameOver();
         return;
     }
@@ -137,10 +144,36 @@ var questionHandler = function(index, userAnswer) {
 
 };
 
+// Function to save high score of user to local storage
 var saveScores = function() {
-
     localStorage.setItem("highScores", JSON.stringify(highScores));
 };
+
+// Function that retrieves high scores that were saved in local storage
+var loadScores = function() {
+
+    // Place the local storage contents into a local variable
+    var savedScores = localStorage.getItem("highScores");
+
+    if (savedScores === null) {
+        return false;
+    }
+
+    // Parsing the string back into an object
+    savedScores = JSON.parse(savedScores);
+
+    for (var i = 0; i < savedScores.length; i++) {
+
+        highScoreObj = {
+            initials: savedScores[i].initials,
+            score: savedScores[i].score,
+            id: savedScores[i].id
+        }
+        highScores.push(highScoreObj);
+    }
+
+    highScoreId = savedScores.length;
+}
 
 
 var gameOver = function() {
@@ -148,6 +181,7 @@ var gameOver = function() {
     var finalForm = document.createElement("form");
     finalForm.className = "game-over";
     document.body.appendChild(finalForm);
+
     var finalMessage = document.createElement("h1");
     finalMessage.textContent = "All Done!"
     finalForm.appendChild(finalMessage);
@@ -161,7 +195,8 @@ var gameOver = function() {
     finalForm.appendChild(enterInitials);
 
     var userInput = document.createElement("input");
-    userInput.setAttribute("id", "user-initials");
+    userInput.setAttribute("id", "user-init");
+    userInput.setAttribute("type", "text");
     enterInitials.appendChild(userInput);
 
     var submitScore = document.createElement("button");
@@ -169,19 +204,81 @@ var gameOver = function() {
     submitScore.textContent = "Submit";
     enterInitials.appendChild(submitScore);
 
-    var highScoreObj = {
-        initials: "Tempoi",
-        score: timeLeft
-    };
-
-    highScores.push(highScoreObj);
-
     submitScore.addEventListener("click", function(event) {
         event.preventDefault();
+        var userInput = document.getElementById("user-init").value;
+        highScoreObj = {
+            initials: userInput,
+            score: timeLeft,
+            id: highScoreId
+        };
+
+        highScores.push(highScoreObj);
+        highScoreId++;
         saveScores();
+        highScoreList();
     });
 
 };
+
+var highScoreList = function() {
+    if (timeLeft === 75) {
+        document.querySelector("main").style.display = "none";
+        document.querySelector("header").style.display = "none";
+    } else {
+        document.querySelector("main").style.display = "none";
+        document.querySelector("header").style.display = "none";
+        document.querySelector("form").remove();
+    }
+
+    var list = document.createElement("form");
+    list.setAttribute("id", "high-score-list")
+    list.className = "game-over";
+    document.body.appendChild(list);
+
+    var highScoreHeading = document.createElement("h1");
+    highScoreHeading.textContent = "High Scores";
+    list.appendChild(highScoreHeading);
+
+    var orderedList = document.createElement("ol");
+    list.appendChild(orderedList);
+
+    highScores.sort((a, b) => (a.score < b.score) ? 1 : -1);
+
+    for (var i = 0; i < highScores.length; i++) {
+        var highScoreEntry = document.createElement("li");
+        highScoreEntry.setAttribute("padding", "5px");
+        highScoreEntry.textContent = highScores[i].initials + " - " + highScores[i].score;
+        orderedList.appendChild(highScoreEntry);
+    }
+
+    var newSection = document.createElement("div");
+    newSection.setAttribute("flex-direction", "row");
+    list.appendChild(newSection);
+
+    var escape = document.createElement("button");
+    escape.setAttribute("id", "go-back-btn");
+    escape.textContent = "Go back";
+    newSection.appendChild(escape);
+
+    escape.addEventListener("click", function() {
+        location.reload();
+    })
+
+    var clearScores = document.createElement("button");
+    clearScores.setAttribute("id", "clear-btn");
+    clearScores.textContent = "Clear high scores";
+    newSection.appendChild(clearScores);
+
+    clearScores.addEventListener("click", function(event) {
+        event.preventDefault();
+        localStorage.clear();
+        orderedList.remove();
+
+    });
+
+
+}
 
 // Event listener on the button that starts the quiz. Once clicked,
 // the first question is shown to user and the timer starts counting down
@@ -190,3 +287,5 @@ startQuiz.addEventListener("click", function() {
     timer = setInterval(timerHandler, 1000);
     questionHandler(index, userAnswer);
 });
+
+loadScores();

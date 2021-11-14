@@ -8,6 +8,9 @@ body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
+
+/* Header */
+
 .parent {
     display: flex;
     flex-wrap: wrap;
@@ -27,6 +30,9 @@ body {
     padding: 30px 70px 0 0;
 }
 
+
+/* Main element */
+
 .center {
     display: flex;
     flex-direction: column;
@@ -41,10 +47,27 @@ body {
     max-width: 638px;
 }
 
+.center .start-quiz {
+    background-color: #4B0082;
+    color: white;
+    margin-top: 15px;
+    height: 35px;
+    width: 110px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.center .start-quiz:hover {
+    background-color: #BA55D3;
+}
+
+
+/* Styling for the end of game section */
+
 .game-over {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     margin-top: 60px;
 }
 
@@ -71,6 +94,13 @@ body {
     margin: 0 0 -10px 10px;
 }
 
+form #submit-btn:hover {
+    background-color: #BA55D3;
+}
+
+
+/* While playing styling */
+
 form {
     max-width: 600px;
     margin: 0 auto;
@@ -92,20 +122,6 @@ form h2 {
     padding-top: 10px;
 }
 
-.center .start-quiz {
-    background-color: #4B0082;
-    color: white;
-    margin-top: 15px;
-    height: 35px;
-    width: 110px;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-.center .start-quiz:hover {
-    background-color: #BA55D3;
-}
-
 .center #btn {
     background-color: #4B0082;
     color: white;
@@ -120,5 +136,38 @@ form h2 {
 }
 
 #btn:hover {
+    background-color: #BA55D3;
+}
+
+
+/* High Score page */
+
+#high-score-list {
+    margin-top: 110px;
+}
+
+#high-score-list button {
+    margin: 10px 10px 10px 0;
+    background-color: #4B0082;
+    color: white;
+    height: 25px;
+    width: 75px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+#high-score-list #clear-btn {
+    width: 140px;
+}
+
+form ol {
+    font-size: 18px;
+    padding-left: 5px;
+    margin-top: 5px;
+    background-color: #a6a6a6;
+    list-style-position: inside;
+}
+
+#high-score-list button:hover {
     background-color: #BA55D3;
 }
