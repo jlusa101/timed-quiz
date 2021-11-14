@@ -15,7 +15,6 @@ var highScoreObj = {
     score: "",
     id: ""
 }
-var userInput = "";
 
 
 // Array of objects that contain questions, answers, and correct answer
@@ -61,6 +60,9 @@ let quizQuestions = [{
     }
 ]
 
+// Function that handles the quiz timer, this function is set to be called once a 
+// second. The timer on browser gets decremented each time
+// When the timer runs out, game is over
 var timerHandler = function() {
     timeLeft--;
     document.getElementById("countdown").innerHTML = timeLeft;
@@ -175,35 +177,45 @@ var loadScores = function() {
     highScoreId = savedScores.length;
 }
 
-
+// Function that informs the user that the game has ended, shows the score and 
+// requires user input to enter their initials to be saved on the high score list
 var gameOver = function() {
 
+    // Creating a new form element
     var finalForm = document.createElement("form");
     finalForm.className = "game-over";
     document.body.appendChild(finalForm);
 
+    // Creating a new heading and attaching it to the form
     var finalMessage = document.createElement("h1");
     finalMessage.textContent = "All Done!"
     finalForm.appendChild(finalMessage);
 
+    // Creating a new p element that shows the score and attaching it to the form
     var userScore = document.createElement("p");
     userScore.textContent = "Your final score is " + timeLeft + ".";
     finalForm.appendChild(userScore);
 
+    // Creating another p element that instructs the user
     var enterInitials = document.createElement("p");
     enterInitials.textContent = "Enter initials:";
     finalForm.appendChild(enterInitials);
 
-    var userInput = document.createElement("input");
-    userInput.setAttribute("id", "user-init");
-    userInput.setAttribute("type", "text");
-    enterInitials.appendChild(userInput);
+    // Creating an input element where the user may enter their initials
+    var userInit = document.createElement("input");
+    userInit.setAttribute("id", "user-init");
+    userInit.setAttribute("type", "text");
+    enterInitials.appendChild(userInit);
 
+    // Creating a button that submits user initials and score to the high score board
     var submitScore = document.createElement("button");
     submitScore.setAttribute("id", "submit-btn");
     submitScore.textContent = "Submit";
     enterInitials.appendChild(submitScore);
 
+    // Adding an event listener to the button
+    // In this function, we capture user input and create an object that includes
+    // their initials, score, and an unique id
     submitScore.addEventListener("click", function(event) {
         event.preventDefault();
         var userInput = document.getElementById("user-init").value;
@@ -213,7 +225,10 @@ var gameOver = function() {
             id: highScoreId
         };
 
+        // Pushing the object into an array
         highScores.push(highScoreObj);
+
+        // Incrementing the high score id
         highScoreId++;
         saveScores();
         highScoreList();
@@ -221,7 +236,10 @@ var gameOver = function() {
 
 };
 
+// Function that creates the high score list to be viewed on the browser
 var highScoreList = function() {
+
+    // If the user clicks the link on the main page
     if (timeLeft === 75) {
         document.querySelector("main").style.display = "none";
         document.querySelector("header").style.display = "none";
@@ -231,20 +249,26 @@ var highScoreList = function() {
         document.querySelector("form").remove();
     }
 
+    // Creating a new form
     var list = document.createElement("form");
     list.setAttribute("id", "high-score-list")
     list.className = "game-over";
     document.body.appendChild(list);
 
+    // Creating a new heading to the form
     var highScoreHeading = document.createElement("h1");
     highScoreHeading.textContent = "High Scores";
     list.appendChild(highScoreHeading);
 
+    // Creating an ordered list
     var orderedList = document.createElement("ol");
     list.appendChild(orderedList);
 
+    // Sorting the array in a way that highest scores come first
     highScores.sort((a, b) => (a.score < b.score) ? 1 : -1);
 
+    // Looping through the array of objects that contain initials and their score
+    // and appending them on the list
     for (var i = 0; i < highScores.length; i++) {
         var highScoreEntry = document.createElement("li");
         highScoreEntry.setAttribute("padding", "5px");
@@ -252,24 +276,29 @@ var highScoreList = function() {
         orderedList.appendChild(highScoreEntry);
     }
 
+    // Creating a div that contains two buttons
     var newSection = document.createElement("div");
     newSection.setAttribute("flex-direction", "row");
     list.appendChild(newSection);
 
+    // Creating a button that takes the user back to main page
     var escape = document.createElement("button");
     escape.setAttribute("id", "go-back-btn");
     escape.textContent = "Go back";
     newSection.appendChild(escape);
 
+    // Adding an event listener that takes the user back to the main page
     escape.addEventListener("click", function() {
         location.reload();
     })
 
+    // Creating a button that clears the high score list
     var clearScores = document.createElement("button");
     clearScores.setAttribute("id", "clear-btn");
     clearScores.textContent = "Clear high scores";
     newSection.appendChild(clearScores);
 
+    // Event listener that clears the local storage when the button is clicked
     clearScores.addEventListener("click", function(event) {
         event.preventDefault();
         localStorage.clear();

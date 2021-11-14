@@ -4,6 +4,11 @@
     padding: 0;
 }
 
+:root {
+    --primary: #4B0082;
+    --hover-col: #BA55D3;
+}
+
 body {
     font-family: Helvetica, Arial, sans-serif;
 }
@@ -23,6 +28,7 @@ body {
 }
 
 .parent .high-score a {
+    color: var(--primary);
     text-decoration: none;
 }
 
@@ -48,7 +54,7 @@ body {
 }
 
 .center .start-quiz {
-    background-color: #4B0082;
+    background-color: var(--primary);
     color: white;
     margin-top: 15px;
     height: 35px;
@@ -58,7 +64,7 @@ body {
 }
 
 .center .start-quiz:hover {
-    background-color: #BA55D3;
+    background-color: var(--hover-col);
 }
 
 
@@ -85,7 +91,7 @@ body {
 }
 
 .game-over #submit-btn {
-    background-color: #4B0082;
+    background-color: var(--primary);
     color: white;
     height: 25px;
     width: 75px;
@@ -95,7 +101,7 @@ body {
 }
 
 form #submit-btn:hover {
-    background-color: #BA55D3;
+    background-color: var(--hover-col);
 }
 
 
@@ -123,7 +129,7 @@ form h2 {
 }
 
 .center #btn {
-    background-color: #4B0082;
+    background-color: var(--primary);
     color: white;
     text-align: left;
     margin-top: 5px;
@@ -136,7 +142,7 @@ form h2 {
 }
 
 #btn:hover {
-    background-color: #BA55D3;
+    background-color: var(--hover-col);
 }
 
 
@@ -148,7 +154,7 @@ form h2 {
 
 #high-score-list button {
     margin: 10px 10px 10px 0;
-    background-color: #4B0082;
+    background-color: var(--primary);
     color: white;
     height: 25px;
     width: 75px;
@@ -169,5 +175,5 @@ form ol {
 }
 
 #high-score-list button:hover {
-    background-color: #BA55D3;
+    background-color: var(--hover-col);
 }
